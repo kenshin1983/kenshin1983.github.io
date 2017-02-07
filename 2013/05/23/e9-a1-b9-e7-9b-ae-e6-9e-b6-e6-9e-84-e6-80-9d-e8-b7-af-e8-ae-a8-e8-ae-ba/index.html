@@ -1,0 +1,692 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="MFS,Mysql Cluster,RPC,架构,项目," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="这篇文章不是什么技术分享，而是对现有项目的一些思路的整理。如果搞新项目的同僚可以一起讨论和借鉴。
+先说下我现在的项目情况：项目规模中等，以一个用户中心为核心（主项目），分支多个功能模块（子项目），如返利模块，分享模块，微博模块，CMS模块等等。项目需要有很好的纵向扩展能力，因为后期会继续增加各种功能模块，并且各个模块之间可以灵活调用数据。如微博模块可以调用分享模块里的数据等等。开发语言已PHP为主">
+<meta property="og:type" content="article">
+<meta property="og:title" content="项目架构思路讨论">
+<meta property="og:url" content="http://igq.cc/2013/05/23/e9-a1-b9-e7-9b-ae-e6-9e-b6-e6-9e-84-e6-80-9d-e8-b7-af-e8-ae-a8-e8-ae-ba/index.html">
+<meta property="og:site_name" content="一个坑">
+<meta property="og:description" content="这篇文章不是什么技术分享，而是对现有项目的一些思路的整理。如果搞新项目的同僚可以一起讨论和借鉴。
+先说下我现在的项目情况：项目规模中等，以一个用户中心为核心（主项目），分支多个功能模块（子项目），如返利模块，分享模块，微博模块，CMS模块等等。项目需要有很好的纵向扩展能力，因为后期会继续增加各种功能模块，并且各个模块之间可以灵活调用数据。如微博模块可以调用分享模块里的数据等等。开发语言已PHP为主">
+<meta property="og:image" content="http://igq.cc/wp-content/uploads/2013/05/QQ截图20130523222638.png">
+<meta property="og:updated_time" content="2017-01-24T08:29:57.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="项目架构思路讨论">
+<meta name="twitter:description" content="这篇文章不是什么技术分享，而是对现有项目的一些思路的整理。如果搞新项目的同僚可以一起讨论和借鉴。
+先说下我现在的项目情况：项目规模中等，以一个用户中心为核心（主项目），分支多个功能模块（子项目），如返利模块，分享模块，微博模块，CMS模块等等。项目需要有很好的纵向扩展能力，因为后期会继续增加各种功能模块，并且各个模块之间可以灵活调用数据。如微博模块可以调用分享模块里的数据等等。开发语言已PHP为主">
+<meta name="twitter:image" content="http://igq.cc/wp-content/uploads/2013/05/QQ截图20130523222638.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"always"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://igq.cc/2013/05/23/e9-a1-b9-e7-9b-ae-e6-9e-b6-e6-9e-84-e6-80-9d-e8-b7-af-e8-ae-a8-e8-ae-ba/"/>
+
+
+
+
+
+  <title> 项目架构思路讨论 | 一个坑 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">一个坑</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <p class="site-subtitle">坑王之王</p>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://igq.cc/2013/05/23/e9-a1-b9-e7-9b-ae-e6-9e-b6-e6-9e-84-e6-80-9d-e8-b7-af-e8-ae-a8-e8-ae-ba/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="无名">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/uploads/psb.jpeg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="一个坑">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="一个坑" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                项目架构思路讨论
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2013-05-23T22:59:41+08:00">
+                2013-05-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/项目架构/" itemprop="url" rel="index">
+                    <span itemprop="name">项目架构</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>这篇文章不是什么技术分享，而是对现有项目的一些思路的整理。如果搞新项目的同僚可以一起讨论和借鉴。</p>
+<p>先说下我现在的项目情况：<br>项目规模中等，以一个用户中心为核心（主项目），分支多个功能模块（子项目），如返利模块，分享模块，微博模块，CMS模块等等。项目需要有很好的纵向扩展能力，因为后期会继续增加各种功能模块，并且各个模块之间可以灵活调用数据。如微博模块可以调用分享模块里的数据等等。开发语言已PHP为主，PYTHON参与部分cron脚本，后期要考虑JAVA或C#的加入。</p>
+<p>所以这里有3个难点：第一个就是可扩展，第二个就是项目模块之间的数据调用，第三个就是不同语言之间的协作。</p>
+<p>这里要注意的是，这个是个中型项目，由好几个子项目组成。每个项目都要当做一个独立的项目来管理，如，有独立的web服务器，独立的数据库。<br>当然有人问，为什么不能都搞一起，数据量大了搞分布式，图片分布式，数据库分布式，文件分布式，都有很好的解决方案。但是，从我这些年来的项目经验来看，永远都是根据业务拆分项目来的合理，利于开发和维护。一般都项目拆分之后，单个项目数据量庞大到单台或几台服务器无法支持的时候，再考虑分布式的解决方案。</p>
+<p>项目中的问题：<br>一开始，项目不是很庞大，所以只有一个项目，4台服务器，所有的PHP，JS，CSS都在一台WEB服务器上。数据库配置一主一从。开发人员2PHP 2前端 1运维。因为项目初期，流量不高，此配置足以满足需求。这个也是一个简单项目的基本配置。</p>
+<p>之后，由于项目扩张。增加了几个子项目，慢慢感觉项目开始臃肿，代码难以维护。试过重构（把多余的重复的代码精简，清晰化各个模块），分离（把JS代码尽可能的分离维护），缓存（增加Memcache和Redis），优化（优化模型层，服务层）。同时，机器加到20多台（为了搞分布式和采集），开发人员也上升到5PHP 3前端 2运维，还是起不到好的效果。比如多个项目平行开发。经常由于一个项目延工，引起另一个项目拖延的恶性循环。由于数据量和图片量的提升，又尝试MFS，MYSQL Cluster，都不尽如人意。</p>
+<p>MFS的问题：6台机器（可能是由于机器不够多，或者机器内存不够），图片读取还是不错的。但是大批量的图片写入就不太吃得消了（采集）。</p>
+<p>MYSQL Cluster的问题：同样也是6台机器，刚刚配好，开始使用就发现一个问题，联表查询稍微多点的数据就会非常慢。最后的决策是尽量不使用的联表查询，当然，这大大增加了开发成本。中间还有很多其他的问题，都是Cluster的限制，比如事务，表的存储引擎冲突等等。</p>
+<p>最后，索性就全部推倒从头来过。</p>
+<p>1、项目重新规划，保留了必要的项目，重新确立了以用户中心为核心项目，其他项目为扩展的开发方向。设立项目经理，管理整个项目的开发以及产品之间的沟通协调。设立测试员，对项目上线以及上线之前的版本测试。</p>
+<p>2、服务器重新架构。重新架了Mysql主从，1主2从，并设立DBA工程师管理数库，保障数据库的稳定和安全。彻底放弃MYSQL Cluster和MFS。把多出来的服务器，用在了负载均衡和Cache服务器上。所有的线上服务统统配备备用服务器。重新整理了各个服务器上的服务，比如把非线上环境的服务和线上必须的服务区分开。讨论和整理事故预案、事故评级和处罚制度。主要的目的都是增加服务器的可靠性。</p>
+<p>3、项目架构重新整理。主要是为了解决前面说的3个难点。引入了XML-RPC服务的概念。</p>
+<p><a href="http://igq.cc/wp-content/uploads/2013/05/QQ截图20130523222638.png"><img src="http://igq.cc/wp-content/uploads/2013/05/QQ截图20130523222638.png" alt="QQ截图20130523222638"></a></p>
+<p>&nbsp;</p>
+<p>如上图：</p>
+<p>RPC相当于一个中间的业务层，主要负责的是数据的操作，像数据缓存，分表数据聚合，大数据处理等都可以放在这里实现。而前端项目只需要考虑如何把数据表现在视图层就行。</p>
+<p>RPC的出现，很好的解决了以上的三个难点。同时彻底轻量级前端项目，所有的程序员都可以根据能力水平，分配对应的工作，只需规范文档，就能很好的处理合作开发。当然，换成现在比较流行了RESTful也是可以的。RPC项目如果庞大，同样也可以分成多个RPC项目。RPC分项目尽量是根据DB业务来分。</p>
+<p>目前项目改造还在试验阶段，中间难免会碰到很多问题，比如RPC的可靠性，是否增加了开发成本等等。但总体来说，比之前的开发要顺畅多了。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/MFS/" rel="tag"># MFS</a>
+          
+            <a href="/tags/Mysql-Cluster/" rel="tag"># Mysql Cluster</a>
+          
+            <a href="/tags/RPC/" rel="tag"># RPC</a>
+          
+            <a href="/tags/架构/" rel="tag"># 架构</a>
+          
+            <a href="/tags/项目/" rel="tag"># 项目</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2013/05/20/oauth2-0-e7-bb-9f-e4-b8-80-e6-8e-88-e6-9d-83-ef-bc-8c-e5-bc-80-e5-8f-91-e8-87-aa-e5-b7-b1-e7-9a-84sdk/" rel="next" title="OAuth2.0统一授权，开发自己的SDK">
+                <i class="fa fa-chevron-left"></i> OAuth2.0统一授权，开发自己的SDK
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2013/05/26/e6-b5-85-e8-b0-88php-e6-a1-86-e6-9e-b6-e5-bc-80-e5-8f-91/" rel="prev" title="浅谈PHP框架开发">
+                浅谈PHP框架开发 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/psb.jpeg"
+               alt="无名" />
+          <p class="site-author-name" itemprop="name">无名</p>
+          <p class="site-description motion-element" itemprop="description">人贱合一</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">31</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">无名</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>
