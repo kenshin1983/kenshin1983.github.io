@@ -87,23 +87,19 @@
 
 
 
-<meta name="description" content="3种人，请绕道，这个东西不适合你！！1、不会Linux;2、平时开发都在window下;3、从来没用过虚拟机;
-OK!如果你不是以上三种人，那么相信这个东西对你我都会有用
-我们平时开发会碰到这几个问题：1、线上服务器环境和本地开发环境相差很远。服务器上一般都是linux!而本地开发环境windows居多。所以我们使用虚拟机，虚拟线上的操作系统以及环境，尽可能的把开发环境做的和线上的一样。2、本地开">
+<meta name="description" content="3种人，请绕道，这个东西不适合你！！1、不会Linux;2、平时开发都在window下;3、从来没用过虚拟机; OK!如果你不是以上三种人，那么相信这个东西对你我都会有用 我们平时开发会碰到这几个问题：1、线上服务器环境和本地开发环境相差很远。服务器上一般都是linux!而本地开发环境windows居多。所以我们使用虚拟机，虚拟线上的操作系统以及环境，尽可能的把开发环境做的和线上的一样。2、本地开">
+<meta name="keywords" content="vagrant 虚拟机 跨平台">
 <meta property="og:type" content="article">
 <meta property="og:title" content="vagrant 跨平台虚拟化开发 神器">
 <meta property="og:url" content="http://igq.cc/2013/11/18/vagrant-e8-b7-a8-e5-b9-b3-e5-8f-b0-e8-99-9a-e6-8b-9f-e5-8c-96-e5-bc-80-e5-8f-91-e7-a5-9e-e5-99-a8/index.html">
 <meta property="og:site_name" content="一个坑">
-<meta property="og:description" content="3种人，请绕道，这个东西不适合你！！1、不会Linux;2、平时开发都在window下;3、从来没用过虚拟机;
-OK!如果你不是以上三种人，那么相信这个东西对你我都会有用
-我们平时开发会碰到这几个问题：1、线上服务器环境和本地开发环境相差很远。服务器上一般都是linux!而本地开发环境windows居多。所以我们使用虚拟机，虚拟线上的操作系统以及环境，尽可能的把开发环境做的和线上的一样。2、本地开">
+<meta property="og:description" content="3种人，请绕道，这个东西不适合你！！1、不会Linux;2、平时开发都在window下;3、从来没用过虚拟机; OK!如果你不是以上三种人，那么相信这个东西对你我都会有用 我们平时开发会碰到这几个问题：1、线上服务器环境和本地开发环境相差很远。服务器上一般都是linux!而本地开发环境windows居多。所以我们使用虚拟机，虚拟线上的操作系统以及环境，尽可能的把开发环境做的和线上的一样。2、本地开">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://igq.cc/wp-content/uploads/2013/11/QQ截图20140704092435.png">
 <meta property="og:updated_time" content="2017-01-24T08:29:57.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="vagrant 跨平台虚拟化开发 神器">
-<meta name="twitter:description" content="3种人，请绕道，这个东西不适合你！！1、不会Linux;2、平时开发都在window下;3、从来没用过虚拟机;
-OK!如果你不是以上三种人，那么相信这个东西对你我都会有用
-我们平时开发会碰到这几个问题：1、线上服务器环境和本地开发环境相差很远。服务器上一般都是linux!而本地开发环境windows居多。所以我们使用虚拟机，虚拟线上的操作系统以及环境，尽可能的把开发环境做的和线上的一样。2、本地开">
+<meta name="twitter:description" content="3种人，请绕道，这个东西不适合你！！1、不会Linux;2、平时开发都在window下;3、从来没用过虚拟机; OK!如果你不是以上三种人，那么相信这个东西对你我都会有用 我们平时开发会碰到这几个问题：1、线上服务器环境和本地开发环境相差很远。服务器上一般都是linux!而本地开发环境windows居多。所以我们使用虚拟机，虚拟线上的操作系统以及环境，尽可能的把开发环境做的和线上的一样。2、本地开">
 <meta name="twitter:image" content="http://igq.cc/wp-content/uploads/2013/11/QQ截图20140704092435.png">
 
 
@@ -368,18 +364,18 @@ OK!如果你不是以上三种人，那么相信这个东西对你我都会有�
 <p>我们平时开发会碰到这几个问题：<br>1、线上服务器环境和本地开发环境相差很远。服务器上一般都是linux!而本地开发环境windows居多。所以我们使用虚拟机，虚拟线上的操作系统以及环境，尽可能的把开发环境做的和线上的一样。<br>2、本地开发环境配置复杂。像我们一般的环境，用最方便的yum，也要装一大堆的东西，配置一大堆的东西。重新架个环境，最快也要2个小时。非常浪费时间。如果 是来了一个新人，对开发环境还要摸索，这样就更悲剧了。<br>3、如果是团队开发，每个人配置的环境都不一样，无法避免有的脚本在某台机器的环境上OK，在其他的机器环境上就挂了，而且这种因环境引起的错误非常难分析。<br>4、开发平台不同，有的人喜欢在window上开发，有的人喜欢在mac上开发，有的人又喜欢在linux下开发。在哪个平台上开发都不重要，重要的是开发效率，但是跨平台开发又有很多不兼容的问题出现。</p>
 <p>现在，vagrant的出现，彻底改变了这一切，把以上的这些问题都很好的解决了。它类似一个虚拟机的ghost，在你配置完环境的时候，可以选择生成一个.box文件（类似.ghost文件），可以在任何平台的机器的上，快速的恢复你之前配置完成的环境。也就是说，你可以把这个.box文件拷贝给任何人， 任何机器，让他们用vagrant还原一下，就不用配置任何环境，直接上手开发。是不是很爽啊。</p>
 <p>好了，说了这么多，开始实战吧。</p>
-<p>1、首先下载一个虚拟机。推荐免费开源的Oracle VM VirtualBox<br>官网下载<a href="https://www.virtualbox.org/wiki/Downloads" target="_blank" rel="external">https://www.virtualbox.org/wiki/Downloads
+<p>1、首先下载一个虚拟机。推荐免费开源的Oracle VM VirtualBox<br>官网下载<a href="https://www.virtualbox.org/wiki/Downloads" target="_blank" rel="noopener">https://www.virtualbox.org/wiki/Downloads
 </a>选择你的操作系统下载后安装。（有中文，不用担心）</p>
-<p>2、然后下载vagant<br>官方下载<a href="http://downloads.vagrantup.com/" target="_blank" rel="external">http://downloads.vagrantup.com</a><br>下载最新版本安装即可（选择自己对应的操作系统）</p>
+<p>2、然后下载vagant<br>官方下载<a href="http://downloads.vagrantup.com/" target="_blank" rel="noopener">http://downloads.vagrantup.com</a><br>下载最新版本安装即可（选择自己对应的操作系统）</p>
 <p>3、已windows为例。<br>打开cmd命令行。<br>首先新建一个vagrant目录，如e:\vagrant（安装好的虚拟机会映射这个目录，也就是你这个目录下的文件，会映射到虚拟机的/vagrant的目录）<br>然后cd 到这个目录，增加一个box（可以增加多个）</p>
 <blockquote>
-<p>e:\vagrant&gt; vagrant box add [名称] [地址]<br>名称表示你虚拟机的名称，随意设置，如centos<br>地址：在<a href="http://www.vagrantbox.es/" target="_blank" rel="external">http://www.vagrantbox.es/</a>这个里面有很多可以选择，当然，同样可以选择自己做的.box文件，这时，地址就是文件路径。<br><span style="line-height: 1.5;">我这里使用的是</span><a href="https://github.com/2creatives/vagrant-centos/releases/download/v0.1.0/centos64-x86_64-20131030.box" target="_blank" rel="external">https://github.com/2creatives/vagrant-centos/releases/download/v0.1.0/centos64-x86_64-20131030.box<br><span style="line-height: 1.5; color: #141412;">你也可以选择下载下来，再init，道理都是一样的。</span></a></p>
+<p>e:\vagrant&gt; vagrant box add [名称] [地址]<br>名称表示你虚拟机的名称，随意设置，如centos<br>地址：在<a href="http://www.vagrantbox.es/" target="_blank" rel="noopener">http://www.vagrantbox.es/</a>这个里面有很多可以选择，当然，同样可以选择自己做的.box文件，这时，地址就是文件路径。<br><span style="line-height: 1.5;">我这里使用的是</span><a href="https://github.com/2creatives/vagrant-centos/releases/download/v0.1.0/centos64-x86_64-20131030.box" target="_blank" rel="noopener">https://github.com/2creatives/vagrant-centos/releases/download/v0.1.0/centos64-x86_64-20131030.box<br><span style="line-height: 1.5; color: #141412;">你也可以选择下载下来，再init，道理都是一样的。</span></a></p>
 </blockquote>
 <p>初始化box</p>
 <blockquote>
 <p>e:\vagrant&gt; vagrant init [名称]<br>启动虚拟机<br>e:\vagrant&gt; vagrant up<br>等待执行完毕，就可以关闭cmd框了，此时，一个虚拟机环境已经启动成功。</p>
 </blockquote>
-<p>4、下载一个ssh 客户端，这里推荐开源免费的xshell<br>官方下载<a href="http://www.netsarang.com/download/free_license.html" target="_blank" rel="external">http://www.netsarang.com/download/free_license.html
+<p>4、下载一个ssh 客户端，这里推荐开源免费的xshell<br>官方下载<a href="http://www.netsarang.com/download/free_license.html" target="_blank" rel="noopener">http://www.netsarang.com/download/free_license.html
 </a>安装完成之后，就可以连接虚拟机了。<br>ssh虚拟机地址127.0.0.1 端口2222<br>用户名vagrant 密码vagrant<br>root用户密码 vagrant<br>连上虚拟机就可以happy了。配置你的环境。</p>
 <p>5、配置完成后，别忘记打包一下，即是备份，又可以把你的环境贡献给其他人（协作开发）或在其他平台使用（跨平台部署）。</p>
 <blockquote>
@@ -392,7 +388,7 @@ OK!如果你不是以上三种人，那么相信这个东西对你我都会有�
 <p>解决方法：修改apache/nginx 的 sendfile=off</p>
 <p>3、很多人提到，新init的box，vagrant无法启动，其实这个问题我也碰到过很多次，花了点时间，google了一番，终于有点眉目了。</p>
 <p>主要原因在于网卡的问题，因为从别人这里打包的package，已经有了别人机器上的网卡配置规则，这里最重要的就是MAC地址，因为每块虚拟网卡的MAC地址都是不同的，如图：</p>
-<p><a href="http://igq.cc/wp-content/uploads/2013/11/QQ截图20140704092435.png" target="_blank" rel="external"><img src="http://igq.cc/wp-content/uploads/2013/11/QQ截图20140704092435.png" alt="QQ截图20140704092435"></a></p>
+<p><a href="http://igq.cc/wp-content/uploads/2013/11/QQ截图20140704092435.png"><img src="http://igq.cc/wp-content/uploads/2013/11/QQ截图20140704092435.png" alt="QQ截图20140704092435"></a></p>
 <p>接下来，就是怎么修改了。有2种方法，一种是修改vbox网卡配置为别人虚拟机里面的MAC地址，第二种就是修改虚拟机里面的网卡配置规则。</p>
 <p>用vbox直接启动虚拟机（注意，不是用vagrant up）</p>
 <p>进入系统</p>
@@ -508,7 +504,7 @@ OK!如果你不是以上三种人，那么相信这个东西对你我都会有�
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-count">11</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

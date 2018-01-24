@@ -87,20 +87,19 @@
 
 
 
-<meta name="description" content="这篇文章不是什么技术分享，而是对现有项目的一些思路的整理。如果搞新项目的同僚可以一起讨论和借鉴。
-先说下我现在的项目情况：项目规模中等，以一个用户中心为核心（主项目），分支多个功能模块（子项目），如返利模块，分享模块，微博模块，CMS模块等等。项目需要有很好的纵向扩展能力，因为后期会继续增加各种功能模块，并且各个模块之间可以灵活调用数据。如微博模块可以调用分享模块里的数据等等。开发语言已PHP为主">
+<meta name="description" content="这篇文章不是什么技术分享，而是对现有项目的一些思路的整理。如果搞新项目的同僚可以一起讨论和借鉴。 先说下我现在的项目情况：项目规模中等，以一个用户中心为核心（主项目），分支多个功能模块（子项目），如返利模块，分享模块，微博模块，CMS模块等等。项目需要有很好的纵向扩展能力，因为后期会继续增加各种功能模块，并且各个模块之间可以灵活调用数据。如微博模块可以调用分享模块里的数据等等。开发语言已PHP为主">
+<meta name="keywords" content="MFS,Mysql Cluster,RPC,架构,项目">
 <meta property="og:type" content="article">
 <meta property="og:title" content="项目架构思路讨论">
 <meta property="og:url" content="http://igq.cc/2013/05/23/e9-a1-b9-e7-9b-ae-e6-9e-b6-e6-9e-84-e6-80-9d-e8-b7-af-e8-ae-a8-e8-ae-ba/index.html">
 <meta property="og:site_name" content="一个坑">
-<meta property="og:description" content="这篇文章不是什么技术分享，而是对现有项目的一些思路的整理。如果搞新项目的同僚可以一起讨论和借鉴。
-先说下我现在的项目情况：项目规模中等，以一个用户中心为核心（主项目），分支多个功能模块（子项目），如返利模块，分享模块，微博模块，CMS模块等等。项目需要有很好的纵向扩展能力，因为后期会继续增加各种功能模块，并且各个模块之间可以灵活调用数据。如微博模块可以调用分享模块里的数据等等。开发语言已PHP为主">
+<meta property="og:description" content="这篇文章不是什么技术分享，而是对现有项目的一些思路的整理。如果搞新项目的同僚可以一起讨论和借鉴。 先说下我现在的项目情况：项目规模中等，以一个用户中心为核心（主项目），分支多个功能模块（子项目），如返利模块，分享模块，微博模块，CMS模块等等。项目需要有很好的纵向扩展能力，因为后期会继续增加各种功能模块，并且各个模块之间可以灵活调用数据。如微博模块可以调用分享模块里的数据等等。开发语言已PHP为主">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://igq.cc/wp-content/uploads/2013/05/QQ截图20130523222638.png">
 <meta property="og:updated_time" content="2017-01-24T08:29:57.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="项目架构思路讨论">
-<meta name="twitter:description" content="这篇文章不是什么技术分享，而是对现有项目的一些思路的整理。如果搞新项目的同僚可以一起讨论和借鉴。
-先说下我现在的项目情况：项目规模中等，以一个用户中心为核心（主项目），分支多个功能模块（子项目），如返利模块，分享模块，微博模块，CMS模块等等。项目需要有很好的纵向扩展能力，因为后期会继续增加各种功能模块，并且各个模块之间可以灵活调用数据。如微博模块可以调用分享模块里的数据等等。开发语言已PHP为主">
+<meta name="twitter:description" content="这篇文章不是什么技术分享，而是对现有项目的一些思路的整理。如果搞新项目的同僚可以一起讨论和借鉴。 先说下我现在的项目情况：项目规模中等，以一个用户中心为核心（主项目），分支多个功能模块（子项目），如返利模块，分享模块，微博模块，CMS模块等等。项目需要有很好的纵向扩展能力，因为后期会继续增加各种功能模块，并且各个模块之间可以灵活调用数据。如微博模块可以调用分享模块里的数据等等。开发语言已PHP为主">
 <meta name="twitter:image" content="http://igq.cc/wp-content/uploads/2013/05/QQ截图20130523222638.png">
 
 
@@ -361,7 +360,7 @@
 <p>1、项目重新规划，保留了必要的项目，重新确立了以用户中心为核心项目，其他项目为扩展的开发方向。设立项目经理，管理整个项目的开发以及产品之间的沟通协调。设立测试员，对项目上线以及上线之前的版本测试。</p>
 <p>2、服务器重新架构。重新架了Mysql主从，1主2从，并设立DBA工程师管理数库，保障数据库的稳定和安全。彻底放弃MYSQL Cluster和MFS。把多出来的服务器，用在了负载均衡和Cache服务器上。所有的线上服务统统配备备用服务器。重新整理了各个服务器上的服务，比如把非线上环境的服务和线上必须的服务区分开。讨论和整理事故预案、事故评级和处罚制度。主要的目的都是增加服务器的可靠性。</p>
 <p>3、项目架构重新整理。主要是为了解决前面说的3个难点。引入了XML-RPC服务的概念。</p>
-<p><a href="http://igq.cc/wp-content/uploads/2013/05/QQ截图20130523222638.png" target="_blank" rel="external"><img src="http://igq.cc/wp-content/uploads/2013/05/QQ截图20130523222638.png" alt="QQ截图20130523222638"></a></p>
+<p><a href="http://igq.cc/wp-content/uploads/2013/05/QQ截图20130523222638.png"><img src="http://igq.cc/wp-content/uploads/2013/05/QQ截图20130523222638.png" alt="QQ截图20130523222638"></a></p>
 <p>&nbsp;</p>
 <p>如上图：</p>
 <p>RPC相当于一个中间的业务层，主要负责的是数据的操作，像数据缓存，分表数据聚合，大数据处理等都可以放在这里实现。而前端项目只需要考虑如何把数据表现在视图层就行。</p>
@@ -484,7 +483,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-count">11</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

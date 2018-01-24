@@ -87,25 +87,18 @@
 
 
 
-<meta name="description" content="前段时间在做OAuth2.0有关项目重构，主要是做各个平台的一站通登陆。
-各个平台都有自己的sdk下载。可是平台太多，查看了几个平台的sdk，发现都是大同小异，因为都是用了Oauth2.0的授权方式。像我这种对代码有洁癖的人。就像自己做一个统一的oauth2.0授权入口。
-先说下流程吧：一般Oauth2都有这么几步。
-1、注册开放平台——创建网站——获取client_id和client_secre">
+<meta name="description" content="前段时间在做OAuth2.0有关项目重构，主要是做各个平台的一站通登陆。 各个平台都有自己的sdk下载。可是平台太多，查看了几个平台的sdk，发现都是大同小异，因为都是用了Oauth2.0的授权方式。像我这种对代码有洁癖的人。就像自己做一个统一的oauth2.0授权入口。 先说下流程吧：一般Oauth2都有这么几步。 1、注册开放平台——创建网站——获取client_id和client_secre">
+<meta name="keywords" content="php,OAuth,sdk">
 <meta property="og:type" content="article">
 <meta property="og:title" content="OAuth2.0统一授权，开发自己的SDK">
 <meta property="og:url" content="http://igq.cc/2013/05/20/oauth2-0-e7-bb-9f-e4-b8-80-e6-8e-88-e6-9d-83-ef-bc-8c-e5-bc-80-e5-8f-91-e8-87-aa-e5-b7-b1-e7-9a-84sdk/index.html">
 <meta property="og:site_name" content="一个坑">
-<meta property="og:description" content="前段时间在做OAuth2.0有关项目重构，主要是做各个平台的一站通登陆。
-各个平台都有自己的sdk下载。可是平台太多，查看了几个平台的sdk，发现都是大同小异，因为都是用了Oauth2.0的授权方式。像我这种对代码有洁癖的人。就像自己做一个统一的oauth2.0授权入口。
-先说下流程吧：一般Oauth2都有这么几步。
-1、注册开放平台——创建网站——获取client_id和client_secre">
+<meta property="og:description" content="前段时间在做OAuth2.0有关项目重构，主要是做各个平台的一站通登陆。 各个平台都有自己的sdk下载。可是平台太多，查看了几个平台的sdk，发现都是大同小异，因为都是用了Oauth2.0的授权方式。像我这种对代码有洁癖的人。就像自己做一个统一的oauth2.0授权入口。 先说下流程吧：一般Oauth2都有这么几步。 1、注册开放平台——创建网站——获取client_id和client_secre">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2017-01-24T08:29:57.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="OAuth2.0统一授权，开发自己的SDK">
-<meta name="twitter:description" content="前段时间在做OAuth2.0有关项目重构，主要是做各个平台的一站通登陆。
-各个平台都有自己的sdk下载。可是平台太多，查看了几个平台的sdk，发现都是大同小异，因为都是用了Oauth2.0的授权方式。像我这种对代码有洁癖的人。就像自己做一个统一的oauth2.0授权入口。
-先说下流程吧：一般Oauth2都有这么几步。
-1、注册开放平台——创建网站——获取client_id和client_secre">
+<meta name="twitter:description" content="前段时间在做OAuth2.0有关项目重构，主要是做各个平台的一站通登陆。 各个平台都有自己的sdk下载。可是平台太多，查看了几个平台的sdk，发现都是大同小异，因为都是用了Oauth2.0的授权方式。像我这种对代码有洁癖的人。就像自己做一个统一的oauth2.0授权入口。 先说下流程吧：一般Oauth2都有这么几步。 1、注册开放平台——创建网站——获取client_id和client_secre">
 
 
 
@@ -357,7 +350,7 @@
 <p>各个平台都有自己的sdk下载。可是平台太多，查看了几个平台的sdk，发现都是大同小异，因为都是用了Oauth2.0的授权方式。像我这种对代码有洁癖的人。就像自己做一个统一的oauth2.0授权入口。</p>
 <p>先说下流程吧：一般Oauth2都有这么几步。</p>
 <p>1、注册开放平台——创建网站——获取client_id和client_secret</p>
-<p>2、获取授权链接（平台上有提供，每个平台不一样），注意，OAuth2.0的授权链接都是以<a href="https://开头。一般都是HTTP" target="_blank" rel="external">https://开头。一般都是HTTP</a> GET 方式提交参数。参数有这么几个。</p>
+<p>2、获取授权链接（平台上有提供，每个平台不一样），注意，OAuth2.0的授权链接都是以<a href="https://开头。一般都是HTTP" target="_blank" rel="noopener">https://开头。一般都是HTTP</a> GET 方式提交参数。参数有这么几个。</p>
 <p><pre>client_id：之前申请的网站的client_id<br>redirect_uri：回调页面（如果用户同意授权，就会跳转到这个链接，<span style="color: #ff0000;">这里要注意的是，很多平台在网站中必须设置和这个参数一样的链接，否则会报redirect_uri_mismatch redirect_uri不匹配这种类似的错误</span>）<br>response_type：这个值一般都是code<br>scope：权限范围（这个参数主要是提示用户要授权哪些服务，有的平台不需要填，而有的平台是必填的。这个要去看下各个平台的API了）<br>state：这个参数是可以被传递的，一般会传一个随机的值，用来防止CSRF跨站脚本攻击。当然也可以利用他的传递，回传一些需要的参数。这个参数一般都是可选的。</pre><br>基本上就这些是标准的oauth2.0参数，其他根据不同的平台会有一些其他的选择参数。参考API。</p>
 <p>用这些参数，拼一个url出来，并跳转到这个地址。就会弹出平台授权的页面了。</p>
 <p>3、用户通过授权，会跳到你刚设置的redirect_uri地址。当然，会附上一个你需要的code参数和之前设置的state参数。利用这个2个参数，我们可以进一步获取关键参数token。</p>
@@ -478,7 +471,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-count">11</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
