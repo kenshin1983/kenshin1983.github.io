@@ -512,16 +512,16 @@
 <p>网上已经有很多安装教程了，这里就全局安装</p>
 <p><pre>$ curl <span class="hljs-operator">-s</span>S <a href="https://getcomposer.org/installer" target="_blank" rel="external">https://getcomposer.org/installer</a> | php<br>$ mv composer.phar /usr/local/bin/composer<br></pre><br>2、修改配置，使用中国镜像</p>
 <p>先找到config文件</p>
-<p><pre>$ sudo composer config -l -g</pre><br><a href="http://igq.cc/wp-content/uploads/2014/09/QQ截图20140911093522.png"><img src="http://igq.cc/wp-content/uploads/2014/09/QQ截图20140911093522.png" alt="QQ截图20140911093522"></a></p>
+<p><pre>$ sudo composer config -l -g</pre><br><a href="http://igq.cc/wp-content/uploads/2014/09/QQ截图20140911093522.png" target="_blank" rel="external"><img src="http://igq.cc/wp-content/uploads/2014/09/QQ截图20140911093522.png" alt="QQ截图20140911093522"></a></p>
 <p>修改配置文件</p>
 <p><pre>$ sudo vim /root/.composer/config.json</pre><br>增加镜像地址</p>
-<p><pre>{<br>    “repositories”: [<br>        {“type”: “composer”, “url”: “<a href="http://pkg.phpcomposer.com/repo/packagist/&quot;}" target="_blank" rel="external">http://pkg.phpcomposer.com/repo/packagist/&quot;}</a>,<br>        {“packagist”: false}<br>    ]<br>}<br></pre><br>修改完成，保存退出<br><a href="http://igq.cc/wp-content/uploads/2014/09/QQ图片20140911094657.png"><img src="http://igq.cc/wp-content/uploads/2014/09/QQ图片20140911094657.png" alt="QQ图片20140911094657"></a></p>
+<p><pre>{<br>    “repositories”: [<br>        {“type”: “composer”, “url”: “<a href="http://pkg.phpcomposer.com/repo/packagist/&quot;}" target="_blank" rel="external">http://pkg.phpcomposer.com/repo/packagist/&quot;}</a>,<br>        {“packagist”: false}<br>    ]<br>}<br></pre><br>修改完成，保存退出<br><a href="http://igq.cc/wp-content/uploads/2014/09/QQ图片20140911094657.png" target="_blank" rel="external"><img src="http://igq.cc/wp-content/uploads/2014/09/QQ图片20140911094657.png" alt="QQ图片20140911094657"></a></p>
 <p>3、更新composer</p>
 <p><pre>$ composer self-update</pre><br>4、创建自己的composer项目</p>
 <p><pre># 创建项目目录<br>$ mkdir project<br>$ cd project</pre></p>
 <h1 id="增加依赖引入swoole-framework框架包，当然也可以是其他包"><a href="#增加依赖引入swoole-framework框架包，当然也可以是其他包" class="headerlink" title="增加依赖引入swoole_framework框架包，当然也可以是其他包"></a>增加依赖引入swoole_framework框架包，当然也可以是其他包</h1><p>$ composer require “matyhtf/swoole_framework:dev-master”<br><br>5、创建自己的依赖包</p>
-<p>先在<a href="https://packagist.org上注册一个账号" target="_blank" rel="external">https://packagist.org上注册一个账号</a><br>packgist支持 Git/Svn/Hg 3种版本控制<br><a href="http://igq.cc/wp-content/uploads/2014/09/QQ截图20140911100831.png"><img src="http://igq.cc/wp-content/uploads/2014/09/QQ截图20140911100831.png" alt="QQ截图20140911100831"></a></p>
-<p><a href="http://igq.cc/wp-content/uploads/2014/09/QQ图片20140911100956.jpg"><img src="http://igq.cc/wp-content/uploads/2014/09/QQ图片20140911100956.jpg" alt="QQ图片20140911100956"></a></p>
+<p>先在<a href="https://packagist.org上注册一个账号" target="_blank" rel="external">https://packagist.org上注册一个账号</a><br>packgist支持 Git/Svn/Hg 3种版本控制<br><a href="http://igq.cc/wp-content/uploads/2014/09/QQ截图20140911100831.png" target="_blank" rel="external"><img src="http://igq.cc/wp-content/uploads/2014/09/QQ截图20140911100831.png" alt="QQ截图20140911100831"></a></p>
+<p><a href="http://igq.cc/wp-content/uploads/2014/09/QQ图片20140911100956.jpg" target="_blank" rel="external"><img src="http://igq.cc/wp-content/uploads/2014/09/QQ图片20140911100956.jpg" alt="QQ图片20140911100956"></a></p>
 <p>packagist会自动检测项目地址下的composer.json文件，然后帮你上传到它的服务器，非常简单</p>
 <p>上传上去之后，自己就可以依赖自己扩展包了</p>
 <p>参考链接</p>
@@ -863,7 +863,7 @@ $ npm -v</pre>
 <p>解决方法：修改apache/nginx 的 sendfile=off</p>
 <p>3、很多人提到，新init的box，vagrant无法启动，其实这个问题我也碰到过很多次，花了点时间，google了一番，终于有点眉目了。</p>
 <p>主要原因在于网卡的问题，因为从别人这里打包的package，已经有了别人机器上的网卡配置规则，这里最重要的就是MAC地址，因为每块虚拟网卡的MAC地址都是不同的，如图：</p>
-<p><a href="http://igq.cc/wp-content/uploads/2013/11/QQ截图20140704092435.png"><img src="http://igq.cc/wp-content/uploads/2013/11/QQ截图20140704092435.png" alt="QQ截图20140704092435"></a></p>
+<p><a href="http://igq.cc/wp-content/uploads/2013/11/QQ截图20140704092435.png" target="_blank" rel="external"><img src="http://igq.cc/wp-content/uploads/2013/11/QQ截图20140704092435.png" alt="QQ截图20140704092435"></a></p>
 <p>接下来，就是怎么修改了。有2种方法，一种是修改vbox网卡配置为别人虚拟机里面的MAC地址，第二种就是修改虚拟机里面的网卡配置规则。</p>
 <p>用vbox直接启动虚拟机（注意，不是用vagrant up）</p>
 <p>进入系统</p>
@@ -1021,7 +1021,7 @@ $ npm -v</pre>
 <p>1、顺利登录后，点击Creat Application<br>2、输入手机号码短信验证</p>
 <p>PS:这里都是中文的，我就不截图了</p>
 <p>3、进入Create an Application页面</p>
-<p><a href="http://igq.cc/wp-content/uploads/2013/11/QQ截图20131116235126.png"><img src="http://igq.cc/wp-content/uploads/2013/11/QQ截图20131116235126.png" alt="QQ截图20131116235126"></a></p>
+<p><a href="http://igq.cc/wp-content/uploads/2013/11/QQ截图20131116235126.png" target="_blank" rel="external"><img src="http://igq.cc/wp-content/uploads/2013/11/QQ截图20131116235126.png" alt="QQ截图20131116235126"></a></p>
 <p>&nbsp;</p>
 <p>之后有成功提示。</p>
 <p>第三步：下载goagent客户端文件</p>
@@ -1350,7 +1350,7 @@ $ npm -v</pre>
 <p>1、项目重新规划，保留了必要的项目，重新确立了以用户中心为核心项目，其他项目为扩展的开发方向。设立项目经理，管理整个项目的开发以及产品之间的沟通协调。设立测试员，对项目上线以及上线之前的版本测试。</p>
 <p>2、服务器重新架构。重新架了Mysql主从，1主2从，并设立DBA工程师管理数库，保障数据库的稳定和安全。彻底放弃MYSQL Cluster和MFS。把多出来的服务器，用在了负载均衡和Cache服务器上。所有的线上服务统统配备备用服务器。重新整理了各个服务器上的服务，比如把非线上环境的服务和线上必须的服务区分开。讨论和整理事故预案、事故评级和处罚制度。主要的目的都是增加服务器的可靠性。</p>
 <p>3、项目架构重新整理。主要是为了解决前面说的3个难点。引入了XML-RPC服务的概念。</p>
-<p><a href="http://igq.cc/wp-content/uploads/2013/05/QQ截图20130523222638.png"><img src="http://igq.cc/wp-content/uploads/2013/05/QQ截图20130523222638.png" alt="QQ截图20130523222638"></a></p>
+<p><a href="http://igq.cc/wp-content/uploads/2013/05/QQ截图20130523222638.png" target="_blank" rel="external"><img src="http://igq.cc/wp-content/uploads/2013/05/QQ截图20130523222638.png" alt="QQ截图20130523222638"></a></p>
 <p>&nbsp;</p>
 <p>如上图：</p>
 <p>RPC相当于一个中间的业务层，主要负责的是数据的操作，像数据缓存，分表数据聚合，大数据处理等都可以放在这里实现。而前端项目只需要考虑如何把数据表现在视图层就行。</p>
@@ -1954,7 +1954,7 @@ $ npm -v</pre>
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

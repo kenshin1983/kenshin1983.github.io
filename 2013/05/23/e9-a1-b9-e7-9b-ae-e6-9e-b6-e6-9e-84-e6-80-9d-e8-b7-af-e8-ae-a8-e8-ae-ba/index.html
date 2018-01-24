@@ -361,7 +361,7 @@
 <p>1、项目重新规划，保留了必要的项目，重新确立了以用户中心为核心项目，其他项目为扩展的开发方向。设立项目经理，管理整个项目的开发以及产品之间的沟通协调。设立测试员，对项目上线以及上线之前的版本测试。</p>
 <p>2、服务器重新架构。重新架了Mysql主从，1主2从，并设立DBA工程师管理数库，保障数据库的稳定和安全。彻底放弃MYSQL Cluster和MFS。把多出来的服务器，用在了负载均衡和Cache服务器上。所有的线上服务统统配备备用服务器。重新整理了各个服务器上的服务，比如把非线上环境的服务和线上必须的服务区分开。讨论和整理事故预案、事故评级和处罚制度。主要的目的都是增加服务器的可靠性。</p>
 <p>3、项目架构重新整理。主要是为了解决前面说的3个难点。引入了XML-RPC服务的概念。</p>
-<p><a href="http://igq.cc/wp-content/uploads/2013/05/QQ截图20130523222638.png"><img src="http://igq.cc/wp-content/uploads/2013/05/QQ截图20130523222638.png" alt="QQ截图20130523222638"></a></p>
+<p><a href="http://igq.cc/wp-content/uploads/2013/05/QQ截图20130523222638.png" target="_blank" rel="external"><img src="http://igq.cc/wp-content/uploads/2013/05/QQ截图20130523222638.png" alt="QQ截图20130523222638"></a></p>
 <p>&nbsp;</p>
 <p>如上图：</p>
 <p>RPC相当于一个中间的业务层，主要负责的是数据的操作，像数据缓存，分表数据聚合，大数据处理等都可以放在这里实现。而前端项目只需要考虑如何把数据表现在视图层就行。</p>
@@ -542,7 +542,7 @@
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

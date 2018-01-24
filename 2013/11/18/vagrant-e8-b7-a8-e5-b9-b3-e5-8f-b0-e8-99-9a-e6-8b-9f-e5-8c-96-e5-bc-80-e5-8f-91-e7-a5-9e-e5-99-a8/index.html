@@ -392,7 +392,7 @@ OK!如果你不是以上三种人，那么相信这个东西对你我都会有�
 <p>解决方法：修改apache/nginx 的 sendfile=off</p>
 <p>3、很多人提到，新init的box，vagrant无法启动，其实这个问题我也碰到过很多次，花了点时间，google了一番，终于有点眉目了。</p>
 <p>主要原因在于网卡的问题，因为从别人这里打包的package，已经有了别人机器上的网卡配置规则，这里最重要的就是MAC地址，因为每块虚拟网卡的MAC地址都是不同的，如图：</p>
-<p><a href="http://igq.cc/wp-content/uploads/2013/11/QQ截图20140704092435.png"><img src="http://igq.cc/wp-content/uploads/2013/11/QQ截图20140704092435.png" alt="QQ截图20140704092435"></a></p>
+<p><a href="http://igq.cc/wp-content/uploads/2013/11/QQ截图20140704092435.png" target="_blank" rel="external"><img src="http://igq.cc/wp-content/uploads/2013/11/QQ截图20140704092435.png" alt="QQ截图20140704092435"></a></p>
 <p>接下来，就是怎么修改了。有2种方法，一种是修改vbox网卡配置为别人虚拟机里面的MAC地址，第二种就是修改虚拟机里面的网卡配置规则。</p>
 <p>用vbox直接启动虚拟机（注意，不是用vagrant up）</p>
 <p>进入系统</p>
@@ -566,7 +566,7 @@ OK!如果你不是以上三种人，那么相信这个东西对你我都会有�
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
